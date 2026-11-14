@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OS Files Optimizer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="toolbar">
+      <div class="toolbar-row">
+        <h1>Doublons</h1>
+        <div id="folders" class="folders" aria-label="Dossiers à analyser"></div>
+        <button id="add-folder" class="btn" type="button">+ Ajouter un dossier</button>
+        <span class="spacer"></span>
+        <label class="field">
+          Taille min.
+          <select id="min-size">
+            <option value="1">Tous</option>
+            <option value="1024" selected>1 Ko</option>
+            <option value="1048576">1 Mo</option>
+            <option value="10485760">10 Mo</option>
+            <option value="104857600">100 Mo</option>
+            <option value="1073741824">1 Go</option>
+          </select>
+        </label>
+        <button id="scan" class="btn primary" type="button" disabled>Analyser</button>
+      </div>
+      <div id="progress" class="progress" hidden>
+        <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+        <span id="progress-label" class="progress-label"></span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="results" aria-label="Résultats">
+        <div class="results-head">
+          <span id="summary" class="summary">Aucune analyse pour l'instant.</span>
+          <span class="spacer"></span>
+          <button id="auto-select" class="btn small" type="button" disabled title="Coche toutes les copies sauf la plus ancienne de chaque groupe">Sélection auto</button>
+          <button id="clear-select" class="btn small" type="button" disabled>Tout décocher</button>
+        </div>
+        <div id="list" class="list" tabindex="0">
+          <div id="empty" class="empty">
+            <p class="empty-title">Ajoutez un ou plusieurs dossiers</p>
+            <p>Ils peuvent se trouver sur des disques différents : ils seront analysés ensemble, et les fichiers identiques listés par taille décroissante.</p>
+            <p class="hint">Vous pouvez aussi glisser-déposer des dossiers dans la fenêtre.</p>
+          </div>
+          <div id="groups"></div>
+          <div id="sentinel"></div>
+        </div>
+        <footer class="actionbar">
+          <span id="selection-info">Aucun fichier coché</span>
+          <span class="spacer"></span>
+          <button id="trash" class="btn danger" type="button" disabled>Mettre à la corbeille</button>
+        </footer>
+      </section>
+
+      <aside id="preview" class="preview" aria-label="Aperçu">
+        <div class="preview-empty">Sélectionnez un fichier pour afficher son aperçu.</div>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

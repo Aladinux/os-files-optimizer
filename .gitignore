@@ -1,0 +1,6 @@
+.toolchain/
+node_modules/
+src-tauri/target/
+src-tauri/gen/
+.DS_Store
+.claude/
