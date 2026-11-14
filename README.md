@@ -19,17 +19,31 @@ Autres outils étudiés : dupeGuru (Python/Qt, GPL), fclones (CLI Rust), WinDirS
 
 ## Installation
 
-Il n'y a pas encore d'installateurs précompilés : l'application se compile depuis les sources,
-sur la plateforme où elle sera utilisée (pas de compilation croisée). La procédure comporte
-trois étapes : installer les prérequis de la plateforme, compiler, puis installer le paquet produit.
+### Windows : installateur prêt à l'emploi
 
-> Seule la procédure macOS (Apple Silicon) a été testée à ce jour. Celles de Windows et de Linux
-> suivent les [prérequis officiels de Tauri 2](https://tauri.app/start/prerequisites/) mais n'ont
-> pas encore été vérifiées sur ces systèmes.
+Télécharger l'installateur depuis la [dernière version publiée](https://github.com/Aladinux/os-files-optimizer/releases/latest) :
 
-### 1. Prérequis
+- `OS.Files.Optimizer_<version>_x64-setup.exe` — installateur recommandé (Windows 10/11, 64 bits)
+- `OS.Files.Optimizer_<version>_x64_en-US.msi` — paquet MSI, pour un déploiement géré
 
-#### macOS (11 ou plus récent)
+L'installateur n'est pas signé : SmartScreen peut afficher un avertissement
+(« Informations complémentaires » → « Exécuter quand même »). Il est compilé automatiquement par
+GitHub Actions à chaque tag de version (`.github/workflows/release.yml`).
+
+### macOS et Linux : compilation depuis les sources
+
+Il n'y a pas encore d'installateurs précompilés pour ces plateformes : l'application se compile
+depuis les sources, sur la plateforme où elle sera utilisée (pas de compilation croisée). La même
+procédure fonctionne aussi sous Windows. Elle comporte trois étapes : installer les prérequis,
+compiler, puis installer le paquet produit.
+
+> Seules la compilation macOS (Apple Silicon) et la compilation Windows par GitHub Actions ont été
+> vérifiées à ce jour. La procédure Linux suit les
+> [prérequis officiels de Tauri 2](https://tauri.app/start/prerequisites/) mais n'a pas encore été testée.
+
+#### 1. Prérequis
+
+##### macOS (11 ou plus récent)
 
 ```bash
 xcode-select --install                                            # outils de compilation Apple
@@ -39,7 +53,7 @@ brew install node                                                 # Node.js (ou 
 
 Si Xcode complet est installé, accepter sa licence une fois : `sudo xcodebuild -license accept`.
 
-#### Windows (10 ou 11)
+##### Windows (10 ou 11)
 
 1. Installer les [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
    en cochant « Développement Desktop en C++ ».
@@ -55,7 +69,7 @@ winget install OpenJS.NodeJS.LTS
 
 Rouvrir le terminal ensuite pour que `cargo` et `npm` soient dans le `PATH`.
 
-#### Linux
+##### Linux
 
 Debian / Ubuntu :
 
@@ -83,7 +97,7 @@ sudo pacman -S --needed webkit2gtk-4.1 base-devel curl wget file openssl \
 rustup default stable
 ```
 
-### 2. Compilation
+#### 2. Compilation
 
 Identique sur les trois plateformes :
 
@@ -96,7 +110,7 @@ npm run build
 
 La première compilation télécharge et compile environ 700 dépendances Rust : compter plusieurs minutes.
 
-### 3. Installation du paquet produit
+#### 3. Installation du paquet produit
 
 Les paquets sont générés dans `src-tauri/target/release/bundle/` :
 
