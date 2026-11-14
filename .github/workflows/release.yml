@@ -1,0 +1,44 @@
+name: Release
+
+# Compile l'installateur Windows et le publie dans une Release GitHub.
+# Déclenché par un tag de version (ex. v0.1.0) ou manuellement.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - run: npm ci
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__
+          releaseName: OS Files Optimizer v__VERSION__
+          releaseBody: |
+            Installateur Windows (x64), non signé : SmartScreen peut afficher un avertissement
+            (« Informations complémentaires » → « Exécuter quand même »).
+
+            - `*-setup.exe` : installateur recommandé
+            - `*.msi` : paquet MSI, pour un déploiement géré
+          releaseDraft: false
+          prerelease: false
